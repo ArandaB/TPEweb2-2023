@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-09-2023 a las 23:30:32
+-- Tiempo de generación: 16-10-2023 a las 22:24:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -29,18 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categories` (
   `id_categorie` int(10) NOT NULL,
-  `categorie` varchar(50) NOT NULL,
-  `features` varchar(500) NOT NULL
+  `categorie` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `categories`
 --
 
-INSERT INTO `categories` (`id_categorie`, `categorie`, `features`) VALUES
-(1, 'Acción', 'El llamado cine de acción es un género cinematográfico donde prima la espectacularidad de las imágenes por medio de efectos especiales de estilo \"clásico\"'),
-(2, 'Drama', 'En el cine y la televisión, el drama es un género que trata situaciones generalmente no épicas en un contexto serio, con un tono y una orientación más susceptible de inspirar tristeza y compasión que risa o gracia.​ Sin embargo, desde el punto de vista etimológico, el drama evoca acción y diálogo.'),
-(3, 'Aventura', 'El género de aventuras es un género artístico propio del ámbito de la ficción narratológica');
+INSERT INTO `categories` (`id_categorie`, `categorie`) VALUES
+(1, 'Acción'),
+(2, 'Drama'),
+(3, 'Aventura');
 
 -- --------------------------------------------------------
 
@@ -77,6 +76,25 @@ INSERT INTO `peliculas` (`id`, `categorie`, `name`, `description`, `release_date
 (13, 'Aventura', 'El Señor de los Anillos: La Comunidad del Anillo', 'Basada en la obra de J.R.R. Tolkien, esta película sigue a Frodo y un grupo de compañeros mientras se embarcan en un viaje épico para destruir un anillo mágico y evitar que caiga en manos del malvado Sauron.\r\n', 2001, 'https://pics.filmaffinity.com/the_lord_of_the_rings_the_fellowship_of_the_ring-952398002-mmed.jpg', 3),
 (14, 'Aventura', 'Los Goonies', 'Un grupo de jóvenes amigos se embarca en una aventura subterránea en busca de un tesoro pirata perdido para salvar sus hogares en esta película clásica llena de diversión y emoción.\r\n', 1985, 'https://pics.filmaffinity.com/the_goonies-301424062-mmed.jpg', 3);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `user` varchar(600) NOT NULL,
+  `password` varchar(600) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `user`, `password`) VALUES
+(1, 'webadmin', '$2a$12$mX6cTRCTdr.J9of5NWx.Uu0EnoIj7MOR26ahA4e3hLWQ/B6XWDeZm');
+
 --
 -- Índices para tablas volcadas
 --
@@ -95,6 +113,12 @@ ALTER TABLE `peliculas`
   ADD KEY `id_categorie` (`id_categorie`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -109,6 +133,12 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `peliculas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
