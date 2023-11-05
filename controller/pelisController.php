@@ -1,6 +1,7 @@
 <?php
 require_once ('model/pelisModel.php');
 require_once ('view/pelisView.php');
+require_once ('controller/userController.php');
 
 
 class PelisController  {
@@ -25,8 +26,12 @@ class PelisController  {
     }
     
     function eliminar($id) {
-        $this->model->eliminar($id);
-        $this->view->RedirectHome();
+        if($this->checkLoggedIn() == true){
+            $this->model->eliminar($id);
+            $this->view->RedirectHome();
+        }else{
+            $this->showHome();
+        }    
     }
 
     function createPeli(){
@@ -95,5 +100,13 @@ class PelisController  {
     }
 
 
+    private function checkLoggedIn(){
+        if(!empty($_SESSION["user"])){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     
 }
