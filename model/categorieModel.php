@@ -47,4 +47,5 @@ class categorieModel{
         $query->execute();
     }
 
+
 }

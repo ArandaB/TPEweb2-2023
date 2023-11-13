@@ -26,12 +26,12 @@ class PelisController  {
     }
     
     function eliminar($id) {
-        if($this->checkLoggedIn() == true){
+        $statusUser = $this->checkLoggedIn();
+        if($statusUser == true){
             $this->model->eliminar($id);
             $this->view->RedirectHome();
-        }else{
-            $this->showHome();
-        }    
+        }
+        $this->view->RedirectHome(); 
     }
 
     function createPeli(){
@@ -100,7 +100,7 @@ class PelisController  {
     }
 
 
-    private function checkLoggedIn(){
+    public function checkLoggedIn(){
         if(!empty($_SESSION["user"])){
             return true;
         }

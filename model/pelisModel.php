@@ -36,6 +36,8 @@ class PelisModel {
             $pathImg = $this->uploadImg($img);
         }
 
+        
+
         $sentencia = $this->db->prepare('INSERT INTO peliculas(categorie, name, description, release_date, url_img, id_categorie) VALUES( ?, ?, ?, ?, ?, ?)');
         $sentencia->execute(array($categorie, $name, $description, $date, $pathImg, $id_categorie));
         
@@ -81,4 +83,12 @@ class PelisModel {
         $query->execute();
     }
     
+    function getPelisCantidad($start, $end){
+        $query = $this->db->prepare("SELECT * FROM peliculas LIMIT $start,$end;");
+        $query->execute();
+        $pelis = $query->fetchAll(PDO::FETCH_OBJ);
+        return $pelis;
+    }
+
+
 }
