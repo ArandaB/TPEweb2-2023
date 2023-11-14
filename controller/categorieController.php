@@ -1,6 +1,7 @@
 <?php
 require_once ('model/categorieModel.php');
 require_once ('view/categorieView.php');
+require_once ('controller/userController.php');
 
 class CategorieController {
     private $model;
@@ -23,8 +24,18 @@ class CategorieController {
     }
     
     function eliminarCategoria($categoria){
-        $this->model->eliminarCategoria($categoria);
-        $this->view->RedirectCategorias();
+        $statusUser = $this->checkLoggedIn();
+        if($statusUser == true){
+            $this->model->eliminarCategoria($categoria);
+            $this->view->RedirectCategorias();
+        }
+        $this->view->RedirectHome(); 
+
+
+
+
+
+        
     }
 
     function modificarTituloCategoria($categoria){ 
@@ -44,5 +55,15 @@ class CategorieController {
         
         $this->model->agregarCategoria($tituloNuevo);
         $this->view->RedirectCategorias();
+    }
+
+    public function checkLoggedIn(){
+        session_start();
+        if(!empty($_SESSION["user"])){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

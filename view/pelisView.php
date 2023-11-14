@@ -9,10 +9,11 @@ class PelisView {
         $this->smarty = new Smarty();
     }
 
-    function showHome($pelis){
+    function showHome($pelis, $categorias){
         include ("templates/header.php");
         $user = $this->checkLoggedInView();
         $this->smarty->assign('pelis', $pelis);
+        $this->smarty->assign('categorias', $categorias);
         $this->smarty->assign('user',  $user);
         $this->smarty->assign('titulo', 'Catalogo Completo');
         $this->smarty->display('templates/render.array.pelis.tpl');
@@ -34,9 +35,10 @@ class PelisView {
     }
 
     
-    function modificar($peli){
+    function modificar($peli, $categorias){
         include ("templates/header.php");
         $this->smarty->assign('peli', $peli);
+        $this->smarty->assign('categorias', $categorias);
         $this->smarty->display('./templates/peliculaModificar.tpl');
 
         include ("templates/footer.html");

@@ -130,3 +130,13 @@ footer {
     border-radius: 1%;
     width:23% ;
 }
+
+.aviso{
+    background-color: red;
+
+}
+
+.espacio{
+    margin:20%;
+    padding: 4%;;
+}

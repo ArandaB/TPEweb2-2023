@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.3.4, created on 2023-11-12 21:39:34
+/* Smarty version 4.3.4, created on 2023-11-14 00:52:42
   from 'C:\xampp\htdocs\trabajotp1\templates\render.array.pelis.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.3.4',
-  'unifunc' => 'content_65513806e7fee0_38863217',
+  'unifunc' => 'content_6552b6cac4c2a6_21202833',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '141270abe502594041f6f7cb34892a050f07987b' => 
     array (
       0 => 'C:\\xampp\\htdocs\\trabajotp1\\templates\\render.array.pelis.tpl',
-      1 => 1697487267,
+      1 => 1699919557,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_65513806e7fee0_38863217 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6552b6cac4c2a6_21202833 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
     <h1><?php echo $_smarty_tpl->tpl_vars['titulo']->value;?>
 </h1>
@@ -62,9 +62,18 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <form class="formulario-agregar-peli" method="post" action="createPeli" enctype="multipart/form-data">
       <label>Nombre de la Pelicula:</label><input type="text" name="name" required>
       <label>Categoria de la pelicula:</label><select name="categorie">
-          <option value="action">Accion</option>
-          <option value="adventure">Aventura</option>
-          <option value="drama">Drama</option>
+      <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['categorias']->value, 'categoria');
+$_smarty_tpl->tpl_vars['categoria']->do_else = true;
+if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['categoria']->value) {
+$_smarty_tpl->tpl_vars['categoria']->do_else = false;
+?>
+          <option value="<?php echo $_smarty_tpl->tpl_vars['categoria']->value->categorie;?>
+"><?php echo $_smarty_tpl->tpl_vars['categoria']->value->categorie;?>
+</option>
+      <?php
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>   
       </select>
       <label>Año de lanzamiento:</label><input type="text" name="release_date" required>
       <label>Descripcion:</label><input type="text" name="description" required>

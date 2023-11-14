@@ -47,5 +47,10 @@ class categorieModel{
         $query->execute();
     }
 
-
+    function getIDCategoria($categoria) {
+        $query = $this->db->prepare("SELECT * FROM categories WHERE categorie = ?");
+        $query->execute([$categoria]);
+        $salida = $query->fetch(PDO::FETCH_OBJ);
+        return $salida->id_categorie;
+    }
 }

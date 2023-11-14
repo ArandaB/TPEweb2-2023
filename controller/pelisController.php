@@ -2,6 +2,7 @@
 require_once ('model/pelisModel.php');
 require_once ('view/pelisView.php');
 require_once ('controller/userController.php');
+require_once('model/categorieModel.php');
 
 
 class PelisController  {
@@ -12,12 +13,14 @@ class PelisController  {
     function __construct(){
         $this->model = new PelisModel();
         $this->view = new PelisView();
+        $this->modelCategorias = new categorieModel();
     }
 
     
     function showHome(){
         $pelis = $this->model->getPelis();
-        $this->view->showHome($pelis);
+        $categorias = $this->modelCategorias->getCategorias();
+        $this->view->showHome($pelis, $categorias);
     }
     
     function showPelicula($id){
@@ -35,29 +38,17 @@ class PelisController  {
     }
 
     function createPeli(){
-        $select = $_POST['categorie'];
-        switch($select){
-            case "action":
-                $categorie = "Acción";
-                $id_categorie = 1;
-                break;
-            case "adventure":
-                $categorie = "Aventura";
-                $id_categorie = 3;
-                break;
-            case "drama":
-                $categorie = "Drama";
-                $id_categorie = 2;
-                break;
-        }
-
+        
+        $categoria = $_POST['categorie'];
+        $id_categorie = $this->modelCategorias->getIDCategoria($categoria);
+    
         if( $_FILES['img']['type'] == "image/jpg" ||
             $_FILES['img']['type'] == "image/jpeg" ||
             $_FILES['img']['type'] == "image/png" ){
-            $this->model->insertPeli($_POST['name'], $_POST['description'], $_POST['release_date'], $_FILES['img']['tmp_name'], $categorie, $id_categorie);
+            $this->model->insertPeli($_POST['name'], $_POST['description'], $_POST['release_date'], $_FILES['img']['tmp_name'], $categoria, $id_categorie);
             $this->view->RedirectHome();
         }else{
-            $this->model->insertPeli($_POST['name'], $_POST['description'], $_POST['release_date'],$_FILES['img']['tmp_name'], $categorie, $id_categorie);
+            $this->model->insertPeli($_POST['name'], $_POST['description'], $_POST['release_date'],$_FILES['img']['tmp_name'], $categoria, $id_categorie);
             $this->view->RedirectHome();
         }
     }
@@ -68,26 +59,14 @@ class PelisController  {
         return $target;
     }
     function modificarView($id){
+        $categorias = $this->modelCategorias->getCategorias();
         $peli = $this->model->getPelicula($id);
-        $this->view->modificar($peli);
+        $this->view->modificar($peli, $categorias);
     }
     function modificar($id){
-        $select = $_POST['categorie'];
-        switch($select){
-            case "action":
-                $categorie = "Acción";
-                $id_categorie = 1;
-                break;
-            case "adventure":
-                $categorie = "Aventura";
-                $id_categorie = 3;
-                break;
-            case "drama":
-                $categorie = "Drama";
-                $id_categorie = 2;
-                break;
-        }
-            $this->model->modificarPelicula($_POST['name'], $_POST['description'], $_POST['release_date'], $categorie, $id_categorie, $id);
+            $categoria = $_POST['categorie'];
+            $id_categorie = $this->modelCategorias->getIDCategoria($categoria);
+            $this->model->modificarPelicula($_POST['name'], $_POST['description'], $_POST['release_date'], $categoria, $id_categorie, $id);
             $this->view->RedirectHome();
     }
     function eliminarTodasSegunCategoria($categoria){
@@ -101,6 +80,7 @@ class PelisController  {
 
 
     public function checkLoggedIn(){
+        session_start();
         if(!empty($_SESSION["user"])){
             return true;
         }
